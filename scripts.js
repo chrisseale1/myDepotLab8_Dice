@@ -1,56 +1,55 @@
-// Global array to keep track of all created Die objects
-var dice = [];
-var diceContainer;
-document.addEventListener('DOMContentLoaded', function() {
-    diceContainer = document.getElementById('dice-container');
+
+var arrayDie = new Array();
+
+
+var Die = function () {
+    this.value = 0;
+    this.div = document.createElement('div');
+    this.div.className = "dieLook";
+    this.roll();
+    this.div.addEventListener("click", this.roll.bind(this));
+    this.div.addEventListener("dblclick", this.removeDie.bind(this));
+
+    var dieContainer = document.getElementById("die-container");
+    document.body.appendChild(dieContainer);
+    dieContainer.appendChild(this.div);
+
+
+};
+Die.prototype.roll = function() {
+    var divNumber = Math.floor(Math.random( ) * 6) + 1;
+    this.value = divNumber;
+    this.div.innerHTML = divNumber;
+};
+Die.prototype.removeDie = function() {
+    this.div.remove(); //removes div from DOM
+    var foundAt = arrayDie.indexOf(this);
+    if (foundAt !== -1) { //if we found die Object
+        arrayDie.splice(foundAt, 1);
+    }
+};
+
+document.addEventListener('DOMContentLoaded',function() {
+     document.getElementById('oneDie').addEventListener('click', addDie);
+        function addDie() {
+            arrayDie.push(new Die());  
+        };
+    document.getElementById("rollPress").addEventListener('click', rollPress);
+        function rollPress() {
+            for (var i = 0; i < arrayDie.length; i++) {
+            arrayDie[i].roll();
+        };
+    };
+    document.getElementById("sum").addEventListener('click', sum);
+        function sum() {
+            var total = 0;
+            for (var i = 0; i < arrayDie.length; i++) {
+                total += arrayDie[i].value;
+        };
+    alert('This sum of all dice is ' + total + '!  Roll Again!');
+    };
 });
 
-var Die = function() {
-    this.value = null;
-    this.div = document.createElement('div');
-    this.div.className = 'die';
-    this.div.addEventListener('click', this.roll.bind(this)); // Extra Credit
-    this.div.addEventListener('dblclick', this.remove.bind(this)); // Extra Credit
-    this.roll();
-    diceContainer.appendChild(this.div);
-}
-Die.prototype.roll = function() {
-    // Generate a random number 1-6 and set the face value property of the die
-    // Also set the innerHTML of the die's div to be the number
-    var num = Math.floor(Math.random() * 6) + 1;
-    this.value = num;
-    this.div.innerHTML = num;
-    return num;
-}
-// Extra Credit
-Die.prototype.remove = function() {
-    // Get the index of "this" die in the array (its location)
-    var index = dice.indexOf(this);
-    if (index !== -1) { // If the die was found in the array
-        dice.splice(index, 1); // Remove the die from the dice array
-        this.div.remove(); // Remove the die's div from the DOM
-    }
-}
 
-function addDie() {
-    // Create a new instance of a Die. Push it onto the global array for later use
-    var die = new Die();
-    dice.push(die);
-}
 
-function rollDice() {
-    // Loop through the global dice array and call .roll() on each die
-    for (var i = 0; i < dice.length; i++) {
-        dice[i].roll();
-    }
-}
 
-// Extra credit
-function sumDice() {
-    // Loop through the global dice array and sum up all the value properties
-    var sum = 0;
-    for (var i = 0; i < dice.length; i++) {
-        sum += dice[i].value;
-    }
-    alert('The sum of all the dice in the window is ' + sum + '.');
-}

@@ -1,5 +1,4 @@
-# Object Lab - Solution
-NOTE: onclick attributes are used in this solution to link the buttons in the HTML to the functions in the JS file.
+# Object Lab
 
 We've worked with objects before. Up until this point, we've mostly dealt with *object literals*, objects that are declared on demand. Here is an example:
 ```
@@ -33,9 +32,9 @@ First, we need to set up a Person class. This is done just once in your code.
 var Person = function(name, email) {
     this.name = name;
     this.email = email;
-    this.sayHello() = function() {
-        console.log('Hello, my name is ' + this.name + ' and my email is ' + this.email + '.');
-    }
+}
+Person.prototype.sayHello = function() {
+    console.log('Hello, my name is ' + this.name + ' and my email is ' + this.email + '.');
 }
 ```
 Now, anywhere else in our code that can "see" the Person variable (remember **scope**), can create new instances of the Person object.
