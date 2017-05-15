@@ -1,0 +1,14 @@
+.die {
+    float: left;
+    width: 200px;
+    height: 200px;
+    font-size: 200%;
+    text-align: center;
+    line-height: 200px;
+    vertical-align: middle;
+    margin: 0.5em;
+    border: 1px solid black;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
